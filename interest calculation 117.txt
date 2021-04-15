@@ -1,0 +1,60 @@
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TreeMap;
+package practise;
+import java.util.Scanner;
+public class mains extends UserMainCode {
+	public static void main(String[] args) throws ParseException {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("enter length");
+		int len = scan.nextInt();
+		System.out.println("enter hashmap");
+		HashMap<String,  String> map1 = new HashMap< String,  String>();
+		HashMap< String,Integer> map2 = new HashMap< String, Integer>();
+		for (int i = 0; i < len; i++) {
+			String key = scan.next();
+			String dob = scan.next();
+			int value = scan.nextInt();
+			map1.put(key, dob);
+			map2.put(key, value);
+		}
+		calculateInterestRate(map1,map2);
+		scan.close();
+	}
+}
+class UserMainCode {
+	static void calculateInterestRate(HashMap<String,String> map1,HashMap<String,Integer> map2) throws ParseException {
+	int age=0;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+		TreeMap<String, Integer> tree = new TreeMap<>();
+		for(Entry<String,String> m:map1.entrySet()){
+		 for(Entry<String,String> n:map2.entrySet())
+			{
+			Date parse = sdf.parse(m.getValue());
+				Calendar c = Calendar.getInstance();
+				c.setTime(parse);
+				int year = c.get(Calendar.YEAR);
+				age=2015-year;
+				if(age>=60) {
+					int interest=(n.getValue() / 100) * 10;
+					tree.put(n.getKey(), n.getValue()+interest);
+				}
+				else if(age<60 && age>=30) {
+					int interest=(n.getValue() / 100) * 7;
+					tree.put(n.getKey(), n.getValue()+interest);
+				}
+				else if(age<30) {
+					int interest=(n.getValue() / 100) *4;
+					tree.put(n.getKey(), n.getValue()+interest);
+				}
+			}
+			}
+		for (Entry<String, Integer> ent : tree.entrySet()) {
+			System.out.println(ent.getKey() + ":" + ent.getValue());
+		}
+
+	}}
